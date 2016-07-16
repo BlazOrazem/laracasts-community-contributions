@@ -23,4 +23,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Check if user is trusted.
+     *
+     * @return bool
+     */
+    public function isTrusted()
+    {
+        return !! $this->trusted;
+    }
 }
