@@ -100,6 +100,16 @@ class CommunityLink extends Model
     }
 
     /**
+     * A community link may have many votes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function votes()
+    {
+        return $this->hasMany(CommunityLinkVote::class, 'community_link_id');
+    }
+
+    /**
      * Determine if the link has already been submitted.
      *
      * @param string $link
