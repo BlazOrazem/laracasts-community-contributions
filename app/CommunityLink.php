@@ -12,9 +12,7 @@ class CommunityLink extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'channel_id', 'title', 'link'
-    ];
+    protected $fillable = ['channel_id', 'title', 'link'];
 
     /**
      * Create a new instance and associate it with the given user.
@@ -53,6 +51,22 @@ class CommunityLink extends Model
         return $this->fill($attributes)->save();
     }
 
+    /**
+     * Scope the query to records from a particular channel.
+     *
+     * @param Builder $builder
+     * @param Channel $channel
+     * @return Builder
+     */
+    public function scopeForChannel($builder, $channel)
+    {
+        if ($channel->exists) {
+            return $builder->where('channel_id', $channel->id);
+        }
+
+        return $builder;
+    }
+    
     /**
      * Mark the community link as approved.
      *

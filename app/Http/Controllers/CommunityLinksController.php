@@ -12,14 +12,19 @@ class CommunityLinksController extends Controller
     /**
      * Show all community links.
      *
+     * @param Channel $channel
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Channel $channel = null)
     {
-        $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
+        $links = CommunityLink::forChannel($channel)
+            ->where('approved', 1)
+            ->latest('updated_at')
+            ->paginate(20);
+
         $channels = Channel::orderBy('title', 'asc')->get();
 
-        return view('community.index', compact('links', 'channels'));
+        return view('community.index', compact('links', 'channels', 'channel'));
     }
 
     /**
